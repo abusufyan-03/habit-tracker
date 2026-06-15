@@ -1,13 +1,17 @@
 import { Button } from "./Button";
 import { eachDayOfInterval, endOfWeek, startOfWeek, format, isFuture } from "date-fns"
 
-export function HabitList() {
-  let habit = [
-    { id: "1", name: "Practice Javascript" },
-    { id: "2", name: "Learn Angular" },
-  ];
 
-  if (habit.length === 0) {
+export type Habit = {id: string, name: string}
+
+type HabitProps = {
+  habits: Habit[];
+}
+
+export function HabitList({habits}: HabitProps) {
+  console.log(habits);
+
+  if (habits.length === 0) {
     return (
       <p className="text-zinc-500 text-center py-12">
         No Habits yet. Add one above to get started.
@@ -17,7 +21,7 @@ export function HabitList() {
 
   return (
     <>
-      {habit.map((habit) => (
+      {habits.map(habit => (
         <HabitItem key={habit.id} habit={habit} />
       ))}
     </>
@@ -25,7 +29,7 @@ export function HabitList() {
 }
 
 type HabitItemProps = {
-  habit: { id: string; name: string };
+  habit: Habit;
 };
 
 function HabitItem({ habit }: HabitItemProps) {
