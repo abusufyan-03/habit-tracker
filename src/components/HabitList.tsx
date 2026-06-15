@@ -1,14 +1,20 @@
 import { Button } from "./Button";
-import { eachDayOfInterval, endOfWeek, startOfWeek, format, isFuture } from "date-fns"
+import {
+  eachDayOfInterval,
+  endOfWeek,
+  startOfWeek,
+  format,
+  isFuture,
+} from "date-fns";
 
-
-export type Habit = {id: string, name: string}
+export type Habit = { id: string; name: string };
 
 type HabitProps = {
   habits: Habit[];
-}
+  deleteHabit(id: string): void;
+};
 
-export function HabitList({habits}: HabitProps) {
+export function HabitList({ habits, deleteHabit }: HabitProps) {
   console.log(habits);
 
   if (habits.length === 0) {
@@ -21,8 +27,8 @@ export function HabitList({habits}: HabitProps) {
 
   return (
     <>
-      {habits.map(habit => (
-        <HabitItem key={habit.id} habit={habit} />
+      {habits.map((habit) => (
+        <HabitItem deleteHabit={deleteHabit} key={habit.id} habit={habit} />
       ))}
     </>
   );
@@ -30,14 +36,14 @@ export function HabitList({habits}: HabitProps) {
 
 type HabitItemProps = {
   habit: Habit;
+  deleteHabit(id: string): void;
 };
 
-function HabitItem({ habit }: HabitItemProps) {
+function HabitItem({ habit, deleteHabit }: HabitItemProps) {
   const visibleDates = eachDayOfInterval({
-    start: startOfWeek(new Date(), {weekStartsOn: 1}),
-    end: endOfWeek(new Date(), {weekStartsOn: 1})
-  })
-
+    start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+    end: endOfWeek(new Date(), { weekStartsOn: 1 }),
+  });
 
   return (
     <>
@@ -48,13 +54,22 @@ function HabitItem({ habit }: HabitItemProps) {
             <span className="text-xl font-bold">{habit.name}</span>
             <span>🔥3</span>
           </div>
-          <Button variant={"ghost-destructive"}>Delete</Button>
+          <Button
+            onClick={() => deleteHabit(habit.id)}
+            variant={"ghost-destructive"}
+          >
+            Delete
+          </Button>
         </div>
 
         {/* Item list bottom with week days */}
         <div className="flex gap-1.5">
           {visibleDates.map((date) => (
-            <Button key={date.toISOString()} disabled={isFuture(date)} className="flex flex-1 flex-col gap-0.5 text-sm">
+            <Button
+              key={date.toISOString()}
+              disabled={isFuture(date)}
+              className="flex flex-1 flex-col gap-0.5 text-sm"
+            >
               <span className="font-medium">{format(date, "EEE")}</span>
               <span>{format(date, "d")}</span>
             </Button>
