@@ -22,7 +22,7 @@ function getVarientStyles(variant: Variant) {
         case "primary":
             return "bg-zinc-200 hover:bg-zinc-400 text-zinc-900"
         case "secondary":
-            return "bg-zinc-200 hover:bg-zinc-400 text-zinc-900"
+            return "bg-zinc-700 hover:bg-zinc-600 text-zinc-100"
         case "ghost-destructive":
             return "text-red-200 hover:text-red-200 hover:bg-red-800 bg-red-700"
         default:

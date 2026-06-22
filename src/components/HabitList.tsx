@@ -5,16 +5,18 @@ import {
   startOfWeek,
   format,
   isFuture,
+  isSameDay,
 } from "date-fns";
 
-export type Habit = { id: string; name: string };
+export type Habit = { id: string; name: string, completion: Date[] };
 
 type HabitProps = {
   habits: Habit[];
   deleteHabit(id: string): void;
+  toggleHabit(id: string, date: Date): void;
 };
 
-export function HabitList({ habits, deleteHabit }: HabitProps) {
+export function HabitList({ habits, deleteHabit, toggleHabit }: HabitProps) {
   console.log(habits);
 
   if (habits.length === 0) {
@@ -28,7 +30,7 @@ export function HabitList({ habits, deleteHabit }: HabitProps) {
   return (
     <>
       {habits.map((habit) => (
-        <HabitItem deleteHabit={deleteHabit} key={habit.id} habit={habit} />
+        <HabitItem deleteHabit={deleteHabit} toggleHabit={toggleHabit} key={habit.id} habit={habit} />
       ))}
     </>
   );
@@ -37,9 +39,10 @@ export function HabitList({ habits, deleteHabit }: HabitProps) {
 type HabitItemProps = {
   habit: Habit;
   deleteHabit(id: string): void;
+  toggleHabit(id: string, date: Date): void;
 };
 
-function HabitItem({ habit, deleteHabit }: HabitItemProps) {
+function HabitItem({ habit, deleteHabit, toggleHabit }: HabitItemProps) {
   const visibleDates = eachDayOfInterval({
     start: startOfWeek(new Date(), { weekStartsOn: 1 }),
     end: endOfWeek(new Date(), { weekStartsOn: 1 }),
@@ -69,6 +72,8 @@ function HabitItem({ habit, deleteHabit }: HabitItemProps) {
               key={date.toISOString()}
               disabled={isFuture(date)}
               className="flex flex-1 flex-col gap-0.5 text-sm"
+              onClick={() => toggleHabit(habit.id, date)}
+              variant={habit.completion.some(c => isSameDay(c, date))? "primary": "secondary"}
             >
               <span className="font-medium">{format(date, "EEE")}</span>
               <span>{format(date, "d")}</span>
