@@ -1,3 +1,4 @@
+import { useHabits, type Habit } from "../context/useHabits";
 import { Button } from "./Button";
 import {
   eachDayOfInterval,
@@ -8,7 +9,6 @@ import {
   isSameDay,
   subDays,
 } from "date-fns";
-import { useHabits, type Habit } from "../context/HabitProvider";
 
 export function HabitList() {
   // console.log(habits);

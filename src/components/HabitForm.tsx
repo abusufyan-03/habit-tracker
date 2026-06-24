@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "./Button";
-import { useHabits } from "../context/HabitProvider";
+import { useHabits } from "../context/useHabits";
 
 
 export function HabitForm() {
