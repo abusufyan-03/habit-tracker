@@ -2,6 +2,10 @@
 
 A simple and modern Habit Tracker built with React and TypeScript to help users track their daily habits and maintain streaks.
 
+## Live Demo
+
+🔗 [View Live Link](https://habit-tracker-for-ts.vercel.app)
+
 ## Features
 
 * ➕ Add new habits
